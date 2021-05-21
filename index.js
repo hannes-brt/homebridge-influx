@@ -7,7 +7,7 @@ const HUMIDITY_SENSOR_NAME = 'humidity';
 
 const getLastMeasurement = (influx, service, schema, cb) => {
   influx
-    .query(`SELECT LAST("${schema[service].field}") FROM ${schema[service].measurement}`)
+    .query(`SELECT LAST("${schema[service].field}") FROM ${schema[service].measurement} WHERE ("room" = '${schema[service].room}')`)
     .then(result => cb(null, result[0] == null ? -1 : result[0].last))
     .catch(err => cb(err));
 };
